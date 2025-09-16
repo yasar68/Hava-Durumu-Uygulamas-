@@ -9,7 +9,7 @@
 
 ## 🚀 Canlı Demo  
 
-[![Vercel](https://img.shields.io/badge/Vercel-Live%20Demo-000000?style=for-the-badge&logo=vercel)](https://senin-uygulaman.vercel.app)
+[![Vercel](https://img.shields.io/badge/Vercel-Live%20Demo-000000?style=for-the-badge&logo=vercel)](https://hava-durumu-uygulamas-jade.vercel.app/)
 
 ---
 
@@ -38,6 +38,6 @@
 Projeyi bilgisayarına klonlayın ve bağımlılıkları yükleyin:  
 
 ```bash
-git clone https://github.com/yasar68/weather-app.git
+git clone https://github.com/yasar68/Hava-Durumu-Uygulamas-.git
 npm install
 npm start
