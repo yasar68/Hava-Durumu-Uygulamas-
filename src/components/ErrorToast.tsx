@@ -32,18 +32,20 @@ const ErrorToast: React.FC<ErrorToastProps> = ({
   const Icon = type === 'error' ? AlertCircle : CheckCircle;
 
   return (
-    <div className="fixed top-4 right-4 z-50 max-w-sm">
-      <div className={`flex items-start p-4 rounded-lg border shadow-lg ${bgColor} animate-slide-in`}>
-        <Icon className={`flex-shrink-0 mt-0.5 mr-3 ${iconColor}`} size={20} />
+    <div className="fixed top-2 left-2 right-2 sm:top-4 sm:right-4 sm:left-auto z-50 w-auto sm:max-w-sm">
+      <div
+        className={`flex items-start p-3 sm:p-4 rounded-lg border shadow-lg ${bgColor} animate-slide-in`}
+      >
+        <Icon className={`flex-shrink-0 mt-0.5 mr-2 sm:mr-3 ${iconColor}`} size={18} />
         <div className="flex-1">
-          <p className={`text-sm font-medium ${textColor}`}>{message}</p>
+          <p className={`text-xs sm:text-sm font-medium ${textColor}`}>{message}</p>
         </div>
         <button
           onClick={onClose}
-          className="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="ml-2 sm:ml-4 text-gray-400 hover:text-gray-600 transition-colors"
           aria-label="Kapat"
         >
-          <X size={16} />
+          <X size={14} className="sm:w-4 sm:h-4" />
         </button>
       </div>
     </div>

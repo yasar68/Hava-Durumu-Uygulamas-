@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Mail, Heart, Cloud, Sun } from 'lucide-react';
+import { Github, Mail, Heart, Cloud, Sun } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -11,17 +11,17 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="flex items-center justify-center md:justify-start space-x-3 mb-4">
               <div className="bg-gradient-to-r from-blue-400 to-purple-500 p-2 rounded-lg">
                 <Sun className="text-white" size={24} />
               </div>
               <span className="text-2xl font-bold">HavaDurumu</span>
             </div>
-            <p className="text-gray-300 mb-4 max-w-md">
+            <p className="text-gray-300 mb-4 max-w-full md:max-w-md text-center md:text-left">
               Dünya'nın her yerinden anlık hava durumu bilgilerine erişin. 
               Doğru tahminler ve detaylı analizlerle her zaman hazırlıklı olun.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex justify-center md:justify-start space-x-4">
               <a
                 href="https://github.com/yasar68"
                 target="_blank"
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="font-semibold text-lg mb-4">Hızlı Erişim</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Ana Sayfa</a></li>
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Support */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="font-semibold text-lg mb-4">Destek</h3>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Yardım Merkezi</a></li>
@@ -66,12 +66,12 @@ const Footer: React.FC = () => {
       {/* Bottom Bar */}
       <div className="border-t border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-2 text-gray-300">
-              <span>© {currentYear} HavaDurumu. Tüm hakları saklıdır.</span>
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
+            <div className="text-gray-300">
+              © {currentYear} HavaDurumu. Tüm hakları saklıdır.
             </div>
             
-            <div className="flex items-center space-x-6 text-sm text-gray-400">
+            <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-2 sm:space-y-0 text-sm text-gray-400 items-center">
               <div className="flex items-center space-x-1">
                 <span>Made with</span>
                 <Heart size={16} className="text-red-500 fill-current" />
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Dekoratif Elements - DÜZELTİLMİŞ: absolute yerine normal flow içinde */}
+      {/* Decorative Line */}
       <div className="w-full h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400"></div>
     </footer>
   );

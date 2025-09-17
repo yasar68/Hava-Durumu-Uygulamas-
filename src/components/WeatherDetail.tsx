@@ -137,7 +137,7 @@ const WeatherDetail: React.FC = () => {
 
         let sunrise = forecast.city.sunrise;
         let sunset = forecast.city.sunset;
-        let sunDataAvailable = true; // varsayılan olarak veri var
+        let sunDataAvailable = true;
 
         const selectedDate = new Date(forecasts[0].dt * 1000);
         const today = new Date();
@@ -163,8 +163,7 @@ const WeatherDetail: React.FC = () => {
                     sunset = sunDataItem.sys.sunset || sunset;
                 }
             } else {
-                sunDataAvailable = false; // veri yok
-                // Yaklaşık hesaplama (opsiyonel)
+                sunDataAvailable = false;
                 const dayOfYear = Math.floor((selectedDate.getTime() - new Date(selectedDate.getFullYear(), 0, 0).getTime()) / (24 * 60 * 60 * 1000));
                 sunrise = startOfDay.getTime() / 1000 + (6 * 3600) + (dayOfYear % 10 * 60);
                 sunset = startOfDay.getTime() / 1000 + (18 * 3600) - (dayOfYear % 10 * 60);
@@ -186,10 +185,9 @@ const WeatherDetail: React.FC = () => {
             visibility: visibilities.reduce((a, b) => a + b, 0) / visibilities.length,
             sunrise,
             sunset,
-            sunDataAvailable // burayı UI’da kontrol edeceğiz
+            sunDataAvailable
         };
     };
-
 
     const renderTemperatureChart = () => {
         if (!forecast || !chartRef.current) return;
@@ -227,6 +225,7 @@ const WeatherDetail: React.FC = () => {
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
@@ -246,6 +245,13 @@ const WeatherDetail: React.FC = () => {
                 scales: {
                     y: {
                         title: { display: true, text: 'Sıcaklık (°C)' }
+                    },
+                    x: {
+                        ticks: {
+                            maxRotation: 0,
+                            autoSkip: true,
+                            maxTicksLimit: 12
+                        }
                     }
                 }
             }
@@ -315,26 +321,26 @@ const WeatherDetail: React.FC = () => {
             <div className="max-w-6xl mx-auto">
                 <button
                     onClick={() => navigate('/')}
-                    className="mb-6 flex items-center text-blue-600 hover:text-blue-800 font-medium"
+                    className="mb-6 flex items-center text-blue-600 hover:text-blue-800 font-medium px-4 py-2 bg-white rounded-lg shadow-sm"
                 >
                     <ArrowLeft size={20} className="mr-2" /> Geri Dön
                 </button>
 
-                <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+                <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 mb-6">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">
                             {forecast.city.name}, {forecast.city.country}
                             <span className="text-blue-500 ml-2">
                                 <i className="fas fa-location-dot"></i>
                             </span>
                         </h2>
 
-                        <div className="flex items-center bg-gray-100 rounded-lg p-2">
+                        <div className="flex items-center bg-gray-100 rounded-lg p-2 w-full md:w-auto">
                             <Calendar size={18} className="text-gray-500 mr-2" />
                             <select
                                 value={selectedDayIndex}
                                 onChange={(e) => setSelectedDayIndex(parseInt(e.target.value))}
-                                className="bg-transparent outline-none"
+                                className="bg-transparent outline-none w-full"
                             >
                                 {dates.slice(0, 7).map((date, index) => (
                                     <option key={date} value={index}>
@@ -347,28 +353,28 @@ const WeatherDetail: React.FC = () => {
 
                     {/* Günlük Hava Durumu Özeti */}
                     {selectedDayData && (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                            <div className="bg-blue-50 p-4 rounded-xl text-center">
-                                <p className="text-gray-600">Maksimum</p>
-                                <p className="text-2xl font-bold text-blue-600">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+                            <div className="bg-blue-50 p-3 md:p-4 rounded-xl text-center">
+                                <p className="text-sm md:text-base text-gray-600">Maksimum</p>
+                                <p className="text-xl md:text-2xl font-bold text-blue-600">
                                     {Math.round(selectedDayData.temp.max)}°C
                                 </p>
                             </div>
-                            <div className="bg-green-50 p-4 rounded-xl text-center">
-                                <p className="text-gray-600">Minimum</p>
-                                <p className="text-2xl font-bold text-green-600">
+                            <div className="bg-green-50 p-3 md:p-4 rounded-xl text-center">
+                                <p className="text-sm md:text-base text-gray-600">Minimum</p>
+                                <p className="text-xl md:text-2xl font-bold text-green-600">
                                     {Math.round(selectedDayData.temp.min)}°C
                                 </p>
                             </div>
-                            <div className="bg-yellow-50 p-4 rounded-xl text-center">
-                                <p className="text-gray-600">Ortalama</p>
-                                <p className="text-2xl font-bold text-yellow-600">
+                            <div className="bg-yellow-50 p-3 md:p-4 rounded-xl text-center">
+                                <p className="text-sm md:text-base text-gray-600">Ortalama</p>
+                                <p className="text-xl md:text-2xl font-bold text-yellow-600">
                                     {Math.round(selectedDayData.temp.avg)}°C
                                 </p>
                             </div>
-                            <div className="bg-indigo-50 p-4 rounded-xl text-center">
-                                <p className="text-gray-600">Hissedilen</p>
-                                <p className="text-2xl font-bold text-indigo-600">
+                            <div className="bg-indigo-50 p-3 md:p-4 rounded-xl text-center">
+                                <p className="text-sm md:text-base text-gray-600">Hissedilen</p>
+                                <p className="text-xl md:text-2xl font-bold text-indigo-600">
                                     {Math.round(selectedDayData.feels_like)}°C
                                 </p>
                             </div>
@@ -376,26 +382,26 @@ const WeatherDetail: React.FC = () => {
                     )}
 
                     {/* Sıcaklık Grafiği */}
-                    <div className="mb-8">
-                        <canvas ref={chartRef} height={100}></canvas>
+                    <div className="mb-6 md:mb-8 h-64 md:h-80">
+                        <canvas ref={chartRef}></canvas>
                     </div>
 
                     {/* Saatlik Hava Durumu */}
-                    <h3 className="text-xl font-semibold mb-4 flex items-center">
+                    <h3 className="text-lg md:text-xl font-semibold mb-4 flex items-center">
                         <i className="fas fa-clock text-blue-500 mr-2"></i>
                         Saatlik Tahminler
                     </h3>
                     <div className="overflow-x-auto pb-4">
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-3 md:space-x-4 min-w-max">
                             {getSelectedDayForecasts().map((item, index) => {
                                 const time = new Date(item.dt * 1000).toLocaleTimeString('tr-TR', { hour: '2-digit' });
                                 const iconUrl = `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`;
 
                                 return (
-                                    <div key={index} className="flex-shrink-0 w-24 text-center bg-gray-50 rounded-xl p-3 shadow-sm">
-                                        <p className="font-medium text-gray-700">{time}</p>
-                                        <img src={iconUrl} alt={item.weather[0].description} className="mx-auto w-10 h-10 my-2" />
-                                        <p className="text-lg font-bold text-gray-800">{Math.round(item.main.temp)}°C</p>
+                                    <div key={index} className="flex-shrink-0 w-20 md:w-24 text-center bg-gray-50 rounded-xl p-3 shadow-sm">
+                                        <p className="font-medium text-gray-700 text-sm md:text-base">{time}</p>
+                                        <img src={iconUrl} alt={item.weather[0].description} className="mx-auto w-8 h-8 md:w-10 md:h-10 my-2" />
+                                        <p className="text-base md:text-lg font-bold text-gray-800">{Math.round(item.main.temp)}°C</p>
                                         <p className="text-xs text-gray-600 capitalize">{getTurkishDescription(item.weather[0].description)}</p>
                                         <div className="flex justify-center items-center mt-2 text-xs text-gray-500">
                                             <Droplets size={12} className="mr-1" />
@@ -410,75 +416,74 @@ const WeatherDetail: React.FC = () => {
 
                 {/* Detaylı Hava Bilgileri */}
                 {selectedDayData && (
-                    <div className="bg-white rounded-2xl shadow-xl p-6">
-                        <h3 className="text-xl font-semibold mb-6 flex items-center">
+                    <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+                        <h3 className="text-lg md:text-xl font-semibold mb-6 flex items-center">
                             <i className="fas fa-info-circle text-blue-500 mr-2"></i>
                             Detaylı Hava Bilgileri
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="flex items-center p-4 bg-blue-50 rounded-xl">
-                                <Gauge className="text-blue-500 mr-3" size={24} />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                            <div className="flex items-center p-3 md:p-4 bg-blue-50 rounded-xl">
+                                <Gauge className="text-blue-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Basınç</p>
-                                    <p>{Math.round(selectedDayData.pressure)} hPa</p>
+                                    <p className="font-semibold text-sm md:text-base">Basınç</p>
+                                    <p className="text-sm md:text-base">{Math.round(selectedDayData.pressure)} hPa</p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-green-50 rounded-xl">
-                                <Eye className="text-green-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-green-50 rounded-xl">
+                                <Eye className="text-green-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Görüş Mesafesi</p>
-                                    <p>{(selectedDayData.visibility / 1000).toFixed(1)} km</p>
+                                    <p className="font-semibold text-sm md:text-base">Görüş Mesafesi</p>
+                                    <p className="text-sm md:text-base">{(selectedDayData.visibility / 1000).toFixed(1)} km</p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-purple-50 rounded-xl">
-                                <Droplets className="text-purple-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-purple-50 rounded-xl">
+                                <Droplets className="text-purple-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Nem</p>
-                                    <p>{Math.round(selectedDayData.humidity)}%</p>
+                                    <p className="font-semibold text-sm md:text-base">Nem</p>
+                                    <p className="text-sm md:text-base">{Math.round(selectedDayData.humidity)}%</p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-orange-50 rounded-xl">
-                                <Wind className="text-orange-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-orange-50 rounded-xl">
+                                <Wind className="text-orange-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Rüzgar</p>
-                                    <p>{selectedDayData.wind.toFixed(1)} m/s</p>
+                                    <p className="font-semibold text-sm md:text-base">Rüzgar</p>
+                                    <p className="text-sm md:text-base">{selectedDayData.wind.toFixed(1)} m/s</p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-red-50 rounded-xl">
-                                <Sunrise className="text-red-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-red-50 rounded-xl">
+                                <Sunrise className="text-red-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Gün Doğumu</p>
-                                    <p>
+                                    <p className="font-semibold text-sm md:text-base">Gün Doğumu</p>
+                                    <p className="text-sm md:text-base">
                                         {selectedDayData.sunDataAvailable
                                             ? new Date(selectedDayData.sunrise * 1000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
                                             : 'Veri Yok'}
                                     </p>
-
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-indigo-50 rounded-xl">
-                                <Sunset className="text-indigo-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-indigo-50 rounded-xl">
+                                <Sunset className="text-indigo-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Gün Batımı</p>
-                                    <p>
+                                    <p className="font-semibold text-sm md:text-base">Gün Batımı</p>
+                                    <p className="text-sm md:text-base">
                                         {selectedDayData.sunDataAvailable
                                             ? new Date(selectedDayData.sunset * 1000).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
                                             : 'Veri Yok'}
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-yellow-50 rounded-xl">
-                                <Thermometer className="text-yellow-500 mr-3" size={24} />
+                            <div className="flex items-center p-3 md:p-4 bg-yellow-50 rounded-xl">
+                                <Thermometer className="text-yellow-500 mr-3" size={20} />
                                 <div>
-                                    <p className="font-semibold">Hava Durumu</p>
-                                    <p className="capitalize">{getTurkishDescription(selectedDayData.weather.description)}</p>
+                                    <p className="font-semibold text-sm md:text-base">Hava Durumu</p>
+                                    <p className="text-sm md:text-base capitalize">{getTurkishDescription(selectedDayData.weather.description)}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center p-4 bg-teal-50 rounded-xl">
-                                <i className="fas fa-temperature-low text-teal-500 mr-3 text-xl"></i>
+                            <div className="flex items-center p-3 md:p-4 bg-teal-50 rounded-xl">
+                                <i className="fas fa-temperature-low text-teal-500 mr-3 text-lg"></i>
                                 <div>
-                                    <p className="font-semibold">Çiğ Noktası (Yaklaşık)</p>
-                                    <p>{Math.round(selectedDayData.temp.min)}°C</p>
+                                    <p className="font-semibold text-sm md:text-base">Çiğ Noktası</p>
+                                    <p className="text-sm md:text-base">{Math.round(selectedDayData.temp.min)}°C</p>
                                 </div>
                             </div>
                         </div>
