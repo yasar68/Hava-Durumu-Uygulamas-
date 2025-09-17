@@ -18,47 +18,47 @@ interface SavedCity {
 // Hero Section Bileşeni - Responsive Versiyon
 const HeroSection: React.FC = () => {
   return (
-    <div className="bg-white rounded-3xl p-4 md:p-6 lg:p-8 mb-8 md:mb-12 mt-4 shadow-xl border border-gray-100 mx-2 md:mx-0">
+    <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 lg:p-8 mb-6 md:mb-12 mt-2 md:mt-4 shadow-lg md:shadow-xl border border-gray-100 mx-2 md:mx-0">
       <div className="text-center">
         <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full px-4 py-1 md:px-6 md:py-2 mb-4 md:mb-6 text-xs md:text-sm">
           <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full animate-pulse"></div>
           <span className="text-white font-medium">Canlı Veri Akışı Aktif</span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-4 md:mb-6 px-2">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6 px-2">
           Dünya'nın Hava Durumu
-          <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mt-2">
+          <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mt-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl">
             Anlık ve Doğru
           </span>
         </h1>
 
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
           200.000'den fazla şehir için gerçek zamanlı hava durumu bilgileri.
           Detaylı tahminler ve uzman analizleriyle her zaman bir adım önde olun.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2">
-          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
-            <div className="text-xl sm:text-2xl">🌍</div>
+          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
+            <div className="text-lg sm:text-xl">🌍</div>
             <div>
-              <div className="font-semibold text-gray-800 text-sm sm:text-base">200.000+</div>
-              <div className="text-xs sm:text-sm text-gray-600">Şehir</div>
+              <div className="font-semibold text-gray-800 text-xs sm:text-sm">200.000+</div>
+              <div className="text-xs text-gray-600">Şehir</div>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
-            <div className="text-xl sm:text-2xl">⏰</div>
+          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
+            <div className="text-lg sm:text-xl">⏰</div>
             <div>
-              <div className="font-semibold text-gray-800 text-sm sm:text-base">7/24</div>
-              <div className="text-xs sm:text-sm text-gray-600">Güncel Veri</div>
+              <div className="font-semibold text-gray-800 text-xs sm:text-sm">7/24</div>
+              <div className="text-xs text-gray-600">Güncel Veri</div>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
-            <div className="text-xl sm:text-2xl">🎯</div>
+          <div className="flex items-center space-x-2 bg-gray-50 rounded-xl px-4 py-2 border border-gray-200 w-full sm:w-auto justify-center sm:justify-start">
+            <div className="text-lg sm:text-xl">🎯</div>
             <div>
-              <div className="font-semibold text-gray-800 text-sm sm:text-base">%99.9</div>
-              <div className="text-xs sm:text-sm text-gray-600">Doğruluk</div>
+              <div className="font-semibold text-gray-800 text-xs sm:text-sm">%99.9</div>
+              <div className="text-xs text-gray-600">Doğruluk</div>
             </div>
           </div>
         </div>
@@ -72,12 +72,12 @@ const AppContent: React.FC = () => {
   const navigate = useNavigate();
   const [savedCities, setSavedCities] = useLocalStorage<SavedCity[]>('weather-cities', []);
   const { weatherData, loading, error, clearError, addCity, addCurrentLocation, removeCity, loadSavedCities } = useWeather();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Ekran boyutu değişikliğini izle
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 768);
     };
     
     window.addEventListener('resize', handleResize);
@@ -137,11 +137,11 @@ const AppContent: React.FC = () => {
       <Navbar />
       <ErrorToast message={error} onClose={clearError} />
 
-      <main className="pt-20 md:pt-24 pb-12 md:pb-16">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8">
+      <main className="pt-16 md:pt-20 pb-10 md:pb-12">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-5">
           <HeroSection />
 
-          <div className="flex flex-col lg:flex-row gap-6 md:gap-8 mb-12 md:mb-16">
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mb-8 md:mb-12">
             <div className="w-full lg:w-1/4">
               <AddCityForm
                 onAddCity={handleAddCity}
